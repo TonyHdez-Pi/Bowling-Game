@@ -21,7 +21,25 @@ class BowlingGame{
     this.game.push(this.rolls)
   }
 
-  getRolls () {
+  // This method makes the score for every frame
+  getScore () {
+    for (let i = 0; i < this.game.length; i++) {
+      // Checking if it work on last shot
+      // if (i === 9) {
+      //   return this.game[i]
+      // }
+      if (this.game[i][0] === 10) {
+        this.score += (this.game[i + 1][0] + this.game[i + 1][1])
+      }
+      if (this.game[i][0] === 0 && this.game[i][1] === 10) {
+        this.score += this.game[i + 1][0]
+      }
+      this.score += (this.game[i][0] + this.game[i][1])
+    }
+    return this.score
+  }
+
+  getFrames () {
     for (let i = 0; i < 10; i++) {
       this.frames()
     }
