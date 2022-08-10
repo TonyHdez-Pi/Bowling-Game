@@ -24,10 +24,6 @@ class BowlingGame{
   // This method makes the score for every frame
   getScore () {
     for (let i = 0; i < this.game.length; i++) {
-      // Checking if it work on last shot
-      // if (i === 9) {
-      //   return this.game[i]
-      // }
       if (this.game[i][0] === 10) {
         this.score += (this.game[i + 1][0] + this.game[i + 1][1])
       }
