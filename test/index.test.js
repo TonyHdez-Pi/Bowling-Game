@@ -2,7 +2,7 @@ const BowlingGame = require('../models/BowlingGame')
 
 const bowlingGame = new BowlingGame()
 
-const rolls = bowlingGame.getFrames()
+const rolls = bowlingGame.getRolls()
 
 // eslint-disable-next-line no-undef
 test('Should return an array of two rolls', () => {

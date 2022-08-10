@@ -10,18 +10,26 @@ class BowlingGame{
   // This will roll, the two chances that the player has per frame
   frames () {
     const pinsLeft = 11
-    for (let i = 0; i < 2; i++) {
-      this.rolls[i] = Math.floor(Math.random() * pinsLeft)
-      i++
-      if (this.rolls[i] !== 10) {
-        this.rolls[i] = Math.floor(Math.random() * (pinsLeft - this.rolls[i - 1]))
-      }
-      this.game.push(this.rolls)
+    this.rolls = []
+    this.rolls[0] = Math.floor(Math.random() * pinsLeft)
+    if (this.rolls[0] === 10) {
+      this.rolls[1] = 0
     }
+    if (this.rolls[0] !== 10) {
+      this.rolls[1] = Math.floor(Math.random() * (pinsLeft - this.rolls[0]))
+    }
+    this.game.push(this.rolls)
   }
 
-  getFrames () {
+  getRolls () {
+    for (let i = 0; i < 10; i++) {
+      this.frames()
+    }
     return this.rolls
+  }
+
+  getGame () {
+    return this.game
   }
 
   bonusCalculator () {
