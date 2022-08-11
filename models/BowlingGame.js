@@ -40,34 +40,16 @@ class BowlingGame{
 
   // This method makes the score for every frame
   getScore (rolls) {
-    if (rolls[0] === 10) {
-      if (this.game.length === 10) {
-        this.lastShotStrike(rolls)
-      } else {
+    if (this.game.length <= 10) {
+      if (rolls[0] === 10) {
         this.strike(rolls)
       }
-    }
-    if ((rolls[0] + rolls[1]) === 10) {
-      if (this.game.length === 10) {
-        this.lastShotSpare(rolls)
-      } else {
+      if ((rolls[0] + rolls[1]) === 10) {
         this.spare(rolls)
       }
+      this.score += rolls[0] + rolls[1]
+      this.game.push([rolls, this.score])
     }
-    this.score += rolls[0] + rolls[1]
-    this.game.push([rolls, this.score])
-  }
-
-  lastShotStrike (rolls) {
-    const lastRoll = this.makeRolls()
-    this.score += 10 + (lastRoll[0] + lastRoll[1])
-    this.game.push([rolls[0], lastRoll[0], lastRoll[1], this.score])
-  }
-
-  lastShotSpare (rolls) {
-    const lastRoll = this.makeRolls()
-    this.score += 10 + (lastRoll[0])
-    this.game.push([rolls[0], rolls[1], lastRoll[0], this.score])
   }
 
   getGame () {
