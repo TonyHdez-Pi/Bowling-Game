@@ -6,8 +6,7 @@ class BowlingGame{
     this.score = 0
   }
 
-  // This will roll, the two chances that the player has per frame
-  frames () {
+  makeRolls () {
     const pinsLeft = 11
     this.rolls = []
     this.rolls[0] = Math.floor(Math.random() * pinsLeft)
@@ -17,44 +16,46 @@ class BowlingGame{
     if (this.rolls[0] !== 10) {
       this.rolls[1] = Math.floor(Math.random() * (pinsLeft - this.rolls[0]))
     }
-    this.game.push(this.rolls)
+    return this.rolls
+  }
+
+  // This will roll, the two chances that the player has per frame
+  frames () {
+    this.getScore(this.makeRolls())
+  }
+
+  strike (rolls) {
+    const nextRolls = this.makeRolls()
+    this.score += (rolls[0] + rolls[1] + nextRolls[0] + nextRolls[1])
+    this.game.push([rolls, this.score])
+  }
+
+  spare (rolls) {
+    const nextRolls = this.makeRolls()
+    this.score += (rolls[0] + rolls[1]) + nextRolls[0]
+    this.game.push(rolls, [this.score])
   }
 
   // This method makes the score for every frame
-  getScore () {
-    // How to apply the strike and spare to the last postion.
-    for (let i = 0; i < this.game.length; i++) {
-      // if the firs roll, give us a 10, then its a strike, so the strike bonus is apply
-      if (i === this.game.length - 1) {
-        if ((this.game[i][0] === 10) || (this.game[i][0] === 0 && this.game[i][1] === 10)) {
-          this.lastShot()
-        }
-      } else {
-        if (this.game[i][0] === 10) {
-          this.score += (this.game[i + 1][0] + this.game[i + 1][1])
-        } // if the second roll give us a 10, then is a spare, so spare bonus is apply
-        if (this.game[i][0] === 0 && this.game[i][1] === 10) {
-          this.score += this.game[i + 1][0]
-        }
-        // if none of this conditions are apply, then just adds the first and second roll to score.
-        this.score += (this.game[i][0] + this.game[i][1])
-      }
+  getScore (rolls) {
+    if (rolls[0] === 10) {
+      this.strike(rolls)
     }
-    return this.score
+    if ((rolls[0] + rolls[1]) === 10) {
+      this.spare(rolls)
+    }
+    this.score += rolls[0] + rolls[1]
+    this.game.push([rolls, this.score])
   }
 
   lastShot () {
     this.frames()
   }
 
-  getFrames () {
-    for (let i = 0; i < 10; i++) {
-      this.frames()
-    }
-    return this.rolls
-  }
-
   getGame () {
+    do {
+      this.frames()
+    } while (this.game.length <= 10)
     return this.game
   }
 }
