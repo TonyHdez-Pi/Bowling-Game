@@ -19,11 +19,6 @@ class BowlingGame{
     return this.rolls
   }
 
-  // This will roll, the two chances that the player has per frame
-  frames () {
-    this.getScore(this.makeRolls())
-  }
-
   strike (rolls) {
     if (this.game.length === 10) {
       const nextRolls = this.makeRolls()
@@ -59,14 +54,14 @@ class BowlingGame{
       if ((rolls[0] + rolls[1]) === 10) {
         this.spare(rolls)
       }
-      this.score += rolls[0] + rolls[1]
-      this.game.push([rolls, this.score])
+      // this.score += rolls[0] + rolls[1]
+      // this.game.push([rolls, this.score])
     }
   }
 
   getGame () {
     while (this.game.length <= 10) {
-      this.frames()
+      this.getScore(this.makeRolls())
     }
     return this.game
   }
